@@ -1,6 +1,39 @@
-/* body{
-    position: fixed;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-} */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'League Spartan';
+}
+h2{
+    width: max-content;
+    margin: 50px auto 50px;
+    /* border: 2px solid rebeccapurple; */
+}
+
+.play {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.images{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+    margin: 0 auto 20px;
+}
+img{
+    filter: drop-shadow(2px 2px 2px);
+}
+.top-image{
+    display: flex;
+    gap: 40px;
+}
+hr{
+    max-width:  300px;
+    margin: 0 auto;
+}
