@@ -11,15 +11,29 @@
     <h2>ROCK PAPER SCISSORS</h2>
     <div class="images">
         <div class="top-image">
-            <img src="./images/stone-small-64px.png" 
+            <img class="rock" src="./images/stone-small-64px.png" 
             alt="stone">
-            <img src="./images/paper-small-64px.png" alt="paper">
+            <img class="paper" src="./images/paper-small-64px.png" alt="paper">
         </div>
         <div class="bottom-image">
-            <img src="./images/scissors-small-64px.png" alt="scissors">
+            <img class="scissors" src="./images/scissors-small-64px.png" alt="scissors">
         </div>
     </div>
     <hr>
+    <div class="scores">
+        <div id="you">
+            <p class="you">You</p>
+            <p class="your-score">0</p>
+        </div>
+        <div id="computer">
+            <p class="computer">Computer</p>
+            <p class="computer-score">0</p>
+        </div>
+    </div>
+    <!-- <div class="outcome"></div> -->
+    <div class="next-round">
+        <button>Next Round</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

@@ -37,3 +37,40 @@ hr{
     max-width:  300px;
     margin: 0 auto;
 }
+.scores{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+#you, #computer{
+    text-align: center;
+}
+#you .you, #computer .computer{
+    font-weight: bold;
+
+}
+.computer-score, .your-score{
+    margin-top: 10px;
+}
+.outcome{
+    /* border: 2px solid rebeccapurple; */
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.next-round{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+.next-round button{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.declare{
+    display: flex;
+    justify-content: center;
+}
