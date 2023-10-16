@@ -27,6 +27,7 @@ let counter = 0;
 //Grabbing the scores
 let yourCurrentScore = document.querySelector('.your-score');
 let computerCurrentScore = document.querySelector('.computer-score');
+let declaration = document.querySelector('.declare');
 
 // Creating images
 let createComputerSelectionImg;
@@ -48,8 +49,6 @@ function createScissorsImage(){
     createDiv.appendChild(createComputerSelectionImg);
 }
 
-
-
 function getComputerChoice(){
     let selection = Math.floor(Math.random() * (possibleOutcomes.length));
     return possibleOutcomes[selection];
@@ -64,17 +63,17 @@ function compareSelections(computerSelection, playerSelection){
                 createStoneImage();
                 computer_scores++;
                 computerCurrentScore.textContent = computer_scores;
-                return 'You lose! Rock beats Scissors.';
+                declaration.textContent = 'You lose! Rock beats Scissors.'; 
             }
             else if (playerSelectionToUpperCase === 'PAPER'){
                 createStoneImage();
                 your_scores++;
                 yourCurrentScore.textContent = your_scores;
-                return 'You win! Paper beats Rock.';
+                declaration.textContent = 'You win! Paper beats Rock.';
             }
             else{
                 createStoneImage();
-                return 'Its a tie!';
+                declaration.textContent = 'Its a tie!';
             }
         }
         else if (computerSelection === 'SCISSORS'){
@@ -82,17 +81,17 @@ function compareSelections(computerSelection, playerSelection){
                 createScissorsImage();
                 computer_scores++;
                 computerCurrentScore.textContent = computer_scores;
-                return 'You lose! Scissors beats Paper';
+                declaration.textContent = 'You lose! Scissors beats Paper';
             }
             else if (playerSelectionToUpperCase === 'ROCK'){
                 createScissorsImage();
                 your_scores++;
                 yourCurrentScore.textContent = your_scores;
-                return 'You win! Rock beats Scissors';
+                declaration.textContent = 'You win! Rock beats Scissors';
             }
             else {
                 createScissorsImage();
-                return 'Its a tie!';
+                declaration.textContent = 'Its a tie!';
             }
         }
         else{
@@ -100,17 +99,17 @@ function compareSelections(computerSelection, playerSelection){
                 createPaperImage();
                 computer_scores++;
                 computerCurrentScore.textContent = computer_scores;
-                return "You lose! Paper beats Rock";
+                declaration.textContent = "You lose! Paper beats Rock";
             }
             else if (playerSelectionToUpperCase === 'SCISSORS'){
                 createPaperImage();
                 your_scores++;
                 yourCurrentScore.textContent = your_scores;
-                return 'You win! Scissors beats Paper';
+                declaration.textContent = 'You win! Scissors beats Paper';
             }
             else{
                 createPaperImage();
-                return 'Its a tie!';
+                declaration.textContent = 'Its a tie!';
             }
         }    
     }
@@ -119,40 +118,67 @@ function compareSelections(computerSelection, playerSelection){
 
 // Getting images
 let getDiv = document.querySelector('div.images');
-let nextRound = document.querySelector('.next-round');
 
-function getImage(e){
+function declareWinner(){
+    let declareMessage = document.createElement('p');
+    declareMessage.setAttribute('class', 'message');
+    declaration.after(declareMessage);
+
+    if (computer_scores > your_scores){
+        declareMessage.textContent = 'YOU LOST'
+    }
+    else if(your_scores > computer_scores){
+        declareMessage.textContent = 'YOU WON!';
+    }
+    else{
+        declareMessage.textContent = 'IT WAS A TIE!';
+    }
+}
+function generateResult(e){
     if (counter >= 5 ){
         getDiv.setAttribute('disabled', true);
-        document.querySelector('button').textContent = 'Restart';
     }
     else{
         if (e.target.src){
+            //Creating a div to house the selected images
             createDiv = document.createElement('div');
             createDiv.setAttribute('class', 'outcome');
-            nextRound.before(createDiv);
+            declaration.before(createDiv);
 
-            // let declaration = document.createElement('p');
-            // declaration.setAttribute('class', 'declare');
-            // declaration.textContent = 'gyrfff';
-            // nextRound.before(declaration);
-            
+            //Creating the selected images
             let createImage = document.createElement('img');
             createImage.src = `${e.target.src}`;
             createDiv.appendChild(createImage);
-            //
+
+            //Creating a div to house the button to reset a round
+            let createDivBtn = document.createElement('div');
+            createDivBtn.setAttribute('class', 'next-round');
+            declaration.after(createDivBtn);
+
+            //Creating the button that resets the current round
+            let createButton = document.createElement('button');
+            createButton.textContent = 'Next Round';
+            createDivBtn.appendChild(createButton);
+
+            //Function to remove certain elements
+            function removeOutcome(){
+                createDiv.remove();
+                declaration.textContent = '';
+                nextRound.remove();
+            }
+            
+            //Grabbing the next-round div and adding an event listener
+            let nextRound = document.querySelector('.next-round');
+            nextRound.addEventListener('click', removeOutcome);
+
             compareSelections(getComputerChoice(), e.target.className);
             counter++;
             console.log(counter);
             if (counter >= 5){
-                document.querySelector('button').textContent = 'Restart';
+                createButton.remove();
+                declareWinner();
             }
         }
     }
 }
-function removeOutcome(){
-    createDiv.remove();
-    declaration.remove();
-}
-getDiv.addEventListener('click', getImage);
-nextRound.addEventListener('click', removeOutcome);
+getDiv.addEventListener('click', generateResult);

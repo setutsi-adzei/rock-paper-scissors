@@ -9,7 +9,6 @@ body{
 h2{
     width: max-content;
     margin: 50px auto 50px;
-    /* border: 2px solid rebeccapurple; */
 }
 
 .play {
@@ -54,8 +53,7 @@ hr{
     margin-top: 10px;
 }
 .outcome{
-    /* border: 2px solid rebeccapurple; */
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -63,7 +61,7 @@ hr{
 .next-round{
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 .next-round button{
     width: 60px;
@@ -73,4 +71,12 @@ hr{
 .declare{
     display: flex;
     justify-content: center;
+    margin-top: 10px;
+}
+.message{
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
