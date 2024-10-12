@@ -80,3 +80,13 @@ hr{
     justify-content: center;
     margin-top: 10px;
 }
+.restartDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.restartDiv button{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}

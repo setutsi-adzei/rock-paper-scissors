@@ -23,6 +23,7 @@ const possibleOutcomes = ['ROCK', 'PAPER', 'SCISSORS'];
 let your_scores = 0;
 let computer_scores = 0;
 let counter = 0;
+let resultExists = false;
 
 //Grabbing the scores
 let yourCurrentScore = document.querySelector('.your-score');
@@ -32,6 +33,9 @@ let declaration = document.querySelector('.declare');
 // Creating images
 let createComputerSelectionImg;
 let createDiv;
+
+//Div to hold the restart Button
+let restartBtnDiv;
 
 function createStoneImage(){
     createComputerSelectionImg = document.createElement('img');
@@ -118,9 +122,10 @@ function compareSelections(computerSelection, playerSelection){
 
 // Getting images
 let getDiv = document.querySelector('div.images');
+// Creating a div for the declaration
+let declareMessage = document.createElement('p');
 
 function declareWinner(){
-    let declareMessage = document.createElement('p');
     declareMessage.setAttribute('class', 'message');
     declaration.after(declareMessage);
 
@@ -134,50 +139,72 @@ function declareWinner(){
         declareMessage.textContent = 'IT WAS A TIE!';
     }
 }
+function addRestartBtn(){
+    let restartBtn = document.createElement('button');
+    restartBtn.setAttribute('class', 'restartBtn');
+    restartBtn.textContent = 'Restart';
+    restartBtnDiv.append(restartBtn);
+}
+
 function generateResult(e){
     if (counter >= 5 ){
         getDiv.setAttribute('disabled', true);
     }
     else{
-        if (e.target.src){
-            //Creating a div to house the selected images
-            createDiv = document.createElement('div');
-            createDiv.setAttribute('class', 'outcome');
-            declaration.before(createDiv);
+        if (!resultExists){
+            if (e.target.src){
+                //Creating a div to house the selected images
+                createDiv = document.createElement('div');
+                createDiv.setAttribute('class', 'outcome');
+                declaration.before(createDiv);
+    
+                //Creating the selected images
+                let createImage = document.createElement('img');
+                createImage.src = `${e.target.src}`;
+                createDiv.appendChild(createImage);
+    
+                //Creating a div to house the button to reset a round
+                let createDivBtn = document.createElement('div');
+                createDivBtn.setAttribute('class', 'next-round');
+                declaration.after(createDivBtn);
+    
+                //Creating the button that resets the current round
+                let nextRoundBtn = document.createElement('button');
+                nextRoundBtn.textContent = 'Next Round';
+                createDivBtn.appendChild(nextRoundBtn);
+    
+                //Function to remove certain elements
+                function removeOutcome(){
+                    createDiv.remove();
+                    declaration.textContent = '';
+                    resultExists = false;
+                    nextRound.remove();
+                }
+                
+                //Grabbing the next-round div and adding an event listener
+                let nextRound = document.querySelector('.next-round');
+                nextRound.addEventListener('click', removeOutcome);
 
-            //Creating the selected images
-            let createImage = document.createElement('img');
-            createImage.src = `${e.target.src}`;
-            createDiv.appendChild(createImage);
-
-            //Creating a div to house the button to reset a round
-            let createDivBtn = document.createElement('div');
-            createDivBtn.setAttribute('class', 'next-round');
-            declaration.after(createDivBtn);
-
-            //Creating the button that resets the current round
-            let createButton = document.createElement('button');
-            createButton.textContent = 'Next Round';
-            createDivBtn.appendChild(createButton);
-
-            //Function to remove certain elements
-            function removeOutcome(){
-                createDiv.remove();
-                declaration.textContent = '';
-                nextRound.remove();
+                
+    
+                compareSelections(getComputerChoice(), e.target.className);
+                counter++;
+                if (counter >= 5){
+                    nextRoundBtn.remove();
+                    declareWinner();
+                    createDivBtn.remove();
+                    restartBtnDiv = document.createElement("div");
+                    restartBtnDiv.setAttribute('class', 'restartDiv');
+                    declareMessage.after(restartBtnDiv);
+                    addRestartBtn();
+                    //Grabbing the restart button and adding an event listener
+                    let getRestartBtn = document.querySelector('.restartBtn')
+                    getRestartBtn.addEventListener('click',()=>{
+                        window.location.reload();
+                    })
+                }
             }
-            
-            //Grabbing the next-round div and adding an event listener
-            let nextRound = document.querySelector('.next-round');
-            nextRound.addEventListener('click', removeOutcome);
-
-            compareSelections(getComputerChoice(), e.target.className);
-            counter++;
-            console.log(counter);
-            if (counter >= 5){
-                createButton.remove();
-                declareWinner();
-            }
+            resultExists = true;
         }
     }
 }
